@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
     <head>
-        <title>Snowboy Personal Wake Word</title>
+        <title>Snowboy 个人唤醒词录制</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Record your own snowboy personal wake word">
+        <meta name="description" content="录制您自己的 Snowboy 个人唤醒词">
         <meta name="author" content="Michael Hansen (synesthesiam)">
 
         <link rel="icon" href="img/favico.png">
@@ -20,22 +20,22 @@
         <form id="form" method="POST" onsubmit="submitAudio()">
             <div class="container-fluid mt-3 mb-3">
                 <div class="row-fluid">
-                    <h1>Snowboy Personal Wake Word Recorder</h1>
+                    <h1>Snowboy 个人唤醒词录制器</h1>
                 </div>
                 <div class="row-fluid">
                     <p>
-                        Record 3 wake word examples and submit them to generate a <tt>.pmdl</tt> file.
+                        录制 3 段唤醒词示例并提交以生成 <tt>.pmdl</tt> 文件。
                     </p>
                     <ol>
-                        <li>Enable microphone (required for Chrome)</li>
-                        <li>Click Record and wait until ready</li>
-                        <li>Speak your wake word and <strong>wait for end</strong></li>
-                        <li>Repeat until you have 3 examples</li>
-                        <li>Enter a model name, submit audio, and click "Save Model" button</li>
+                        <li>启用麦克风（Chrome 浏览器必需）</li>
+                        <li>点击录制按钮并等待准备就绪</li>
+                        <li>说出您的唤醒词并<strong>等待结束</strong></li>
+                        <li>重复录制直到有 3 个示例</li>
+                        <li>输入模型名称，提交音频，然后点击"保存模型"按钮</li>
                     </ol>
                 </div>
                 <div class="row-fluid">
-                    <div id="alert" class="alert alert-info">Waiting for microphone to be enabled</div>
+                    <div id="alert" class="alert alert-info">等待启用麦克风</div>
                 </div>
                 <div class="row-fluid">
                     <div id="waveform"></div>
@@ -44,21 +44,21 @@
                     <div class="controls row-fluid">
                         <button type="button" id="record" class="btn btn-lg btn-danger" data-action="record" hidden>
                             <i id="recordIcon" class="fas fa-microphone mr-1"></i>
-                            <span id="recordText">Record</span>
+                            <span id="recordText">录制</span>
                         </button>
                         <button type="button" id="enable" class="btn btn-lg btn-primary" data-action="enable">
                             <i class="fas fa-power-off mr-1"></i>
-                            Enable Microphone
+                            启用麦克风
                         </button>
                     </div>
                 </div>
                 <div class="form-group mt-3">
                     <div class="form-row">
                         <div class="col-auto">
-                            <label for="modelName" class="form-label">Model Name:</label>
+                            <label for="modelName" class="form-label">模型名称：</label>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" name="modelName" id="modelName" placeholder="Model name">
+                            <input type="text" class="form-control" name="modelName" id="modelName" placeholder="输入模型名称">
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="control-group mt-5">
                     <div class="controls row">
                         <div class="col">
-                            <h3>Examples (3 required)</h3>
+                            <h3>音频示例（需要 3 个）</h3>
                         </div>
                     </div>
                     <div class="controls row">
@@ -82,14 +82,14 @@
                         <div class="col-auto">
                             <button id="submit" type="submit" class="btn btn-lg btn-success" data-action="submit">
                                 <i class="fas fa-upload mr-1"></i>
-                                Submit
+                                提交
                             </button>
-                            <i id="submittedIcon" class="fas fa-thumbs-up ml-2" title="Submitted" hidden></i>
+                            <i id="submittedIcon" class="fas fa-thumbs-up ml-2" title="已提交" hidden></i>
                         </div>
                         <div class="col">
                             <a id="download" href="#" class="btn btn-lg btn-primary" style="display: none;">
                                 <i class="fas fa-download mr-2"></i>
-                                Save Model
+                                保存模型
                             </a>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
              // Update record button until timeout
              if (waitSecondsLeft > 1) {
                  waitSecondsLeft -= 1;
-                 q('#recordText').textContent = 'Wait...' + waitSecondsLeft;
+                 q('#recordText').textContent = '请等待...' + waitSecondsLeft;
                  setTimeout(startRecording, 1000);
                  return;
              }
@@ -146,20 +146,20 @@
              recordSecondsLeft = numRecordSeconds;
              q('#recordIcon').classList.remove('fa-hand-paper');
              q('#recordIcon').classList.add('fa-thumbs-up');
-             q('#recordText').textContent = 'Speak...' + recordSecondsLeft;
+             q('#recordText').textContent = '请说话...' + recordSecondsLeft;
              q('#record').classList.remove("btn-warning");
              q('#record').classList.add("btn-success");
 
              // Check recording timeout
              setTimeout(stopRecording, 1000);
-             setAlert('Recording for ' + recordSecondsLeft + ' seconds', 'alert-warning');
+             setAlert('正在录制 ' + recordSecondsLeft + ' 秒', 'alert-warning');
          }
 
          function stopRecording() {
              // Check for recording timeout
              if (recordSecondsLeft > 1) {
                  recordSecondsLeft -= 1;
-                 q('#recordText').textContent = 'Speak...' + recordSecondsLeft;
+                 q('#recordText').textContent = '请说话...' + recordSecondsLeft;
                  setTimeout(stopRecording, 1000);
                  return;
              }
@@ -188,7 +188,7 @@
 
              const deleteButton = document.createElement("button");
              deleteButton.setAttribute('type', 'button');
-             deleteButton.setAttribute('title', 'Delete example');
+             deleteButton.setAttribute('title', '删除示例');
              deleteButton.classList.add('btn');
              deleteButton.classList.add('btn-danger');
              deleteButton.classList.add('align-top');
@@ -209,14 +209,14 @@
              // Reset UI for next recording
              q('#recordIcon').classList.remove('fa-thumbs-up');
              q('#recordIcon').classList.add('fa-microphone');
-             q('#recordText').textContent = 'Record';
+             q('#recordText').textContent = '录制';
              q('#record').classList.remove("btn-success");
              q('#record').classList.add("btn-danger");
 
              q('#record').disabled = false;
              q('#submit').disabled = false;
 
-             setAlert('Done recording', 'alert-success');
+             setAlert('录制完成', 'alert-success');
          }
 
          async function submitAudio() {
@@ -226,20 +226,20 @@
              // Ensure model name is set
              const modelName = q('#modelName').value || '';
              if (modelName.length == 0) {
-                 alert('Model name is required');
+                 alert('请输入模型名称');
                  return;
              }
 
              // Check for at least 3 examples
              if (Object.keys(blobs).length < 3) {
-                 alert('Need at least 3 examples');
+                 alert('至少需要 3 个音频示例');
                  return;
              }
 
              const formData = new FormData(q('#form'));
              const formPage = 'generate';
 
-             setAlert('Submitting data...', 'alert-warning');
+             setAlert('正在提交数据...', 'alert-warning');
 
              // Attach each audio blob as a file
              Object.keys(blobs).forEach(function(k) {
@@ -268,10 +268,10 @@
                      q('#download').setAttribute('download', modelName + '.pmdl');
                      q('#download').style.display = '';
 
-                     setAlert('Microphone ready!', 'alert-success');
+                     setAlert('模型生成成功！点击"保存模型"按钮下载', 'alert-success');
                  })
                  .catch((error) => {
-                     setAlert('Failed to submit: ' + error, 'alert-danger');
+                     setAlert('提交失败：' + error, 'alert-danger');
                  });
 
          }
@@ -307,13 +307,13 @@
                  }
 
                  q('#record').disabled = false;
-                 setAlert('Microphone ready!', 'alert-success');
+                 setAlert('麦克风已就绪！', 'alert-success');
              });
 
              wavesurfer.microphone.on('deviceError', function(code) {
                  recorder = null;
                  q('#record').disabled = true;
-                 setAlert('Device error: ' + code, 'alert-danger');
+                 setAlert('设备错误：' + code, 'alert-danger');
              });
 
              // Enable microphone (required to work in Chrome)
@@ -338,7 +338,7 @@
                      waitSecondsLeft = numWaitSeconds;
                      q('#recordIcon').classList.remove('fa-microphone');
                      q('#recordIcon').classList.add('fa-hand-paper');
-                     q('#recordText').textContent = 'Wait...' + waitSecondsLeft;
+                     q('#recordText').textContent = '请等待...' + waitSecondsLeft;
 
                      setTimeout(startRecording, 1000);
                  });

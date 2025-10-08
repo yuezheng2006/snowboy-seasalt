@@ -72,7 +72,7 @@ def main():
     filename = args.model_name
     print("saving file to %s" % filename)
     f = open(filename, "wb")
-    f.write(open(out.name).read())
+    f.write(open(out.name, "rb").read())
     f.close()
     print("finished")
 
