@@ -2,3 +2,7 @@ hypercorn==0.10.1
 quart==0.11.3
 quart-cors==0.3.0
 rhasspy-silence~=0.4.0
+jinja2<3.0.0
+markupsafe<2.1.0
+werkzeug<2.0.0
+scipy

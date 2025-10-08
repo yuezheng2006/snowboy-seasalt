@@ -1,0 +1,21 @@
+# Docker Compose v2 兼容配置
+# 使用: docker compose up -d 或 docker-compose up -d
+
+services:
+  snowboy-web:
+    image: rhasspy/snowboy-seasalt:latest
+    container_name: snowboy-seasalt
+    ports:
+      - "8000:8000"
+    volumes:
+      # 可选：保存生成的模型到本地
+      - ./models:/app/models
+    environment:
+      LANG: C.UTF-8
+    restart: unless-stopped
+    
+    # 如果要构建本地镜像，使用以下配置
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+

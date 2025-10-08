@@ -2,3 +2,16 @@
 __pycache__/
 .mypy_cache/
 *.pyc
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+nohup.out
+
+# 模型文件（可选）
+models/
+*.pmdl

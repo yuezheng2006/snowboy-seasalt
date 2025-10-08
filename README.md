@@ -1,54 +1,63 @@
 # Snowboy Personal Wake Word Recorder
 
-Docker-based web interface for generating `.pmdl` files from audio examples for [snowboy](https://github.com/Kitt-AI/snowboy).
+基于 Web 的个人唤醒词录制工具，可生成 Snowboy 的 `.pmdl` 模型文件。
 
-Credit to [seasalt-ai](https://github.com/seasalt-ai/snowboy)
+项目基于 [snowboy](https://github.com/Kitt-AI/snowboy) 和 [seasalt-ai](https://github.com/seasalt-ai/snowboy)
 
-## Docker Image
+---
 
-To get started, run the pre-built Docker image:
+## 🚀 快速开始
 
-```sh
-$ docker run -it -p 8000:8000 rhasspy/snowboy-seasalt
+### Docker 部署（推荐）
+
+```bash
+docker run -it --rm -p 8000:8000 rhasspy/snowboy-seasalt
 ```
 
-The web interface will now be available at http://localhost:8000
+访问：http://localhost:8000
 
-If you'd like to build the Docker image yourself, see `scripts/build-docker.sh`
+**详细：** [DOCKER.md](DOCKER.md)
 
-## Web Interface
+---
 
-Examples can be recorded and submitted directly in a web browser. Once you've enabled your microphone (required by Chrome), each example can be recorded by:
+### 本地运行
 
-1. Clicking the "Record" button and waiting until it's ready
-2. Speaking the wake word and then quietly waiting until it's done
+**注意：** Python 3.13 不兼容，需要 Python 3.11/3.12
 
-The timeouts here are used to avoid needing to trim out button clicks from the audio.
+```bash
+./start.sh  # macOS/Linux
+```
 
-Once you have 3 examples, click "Submit" and you should see a "Save Model" button appear. Save the `.pmdl` file somewhere and enjoy your new wake word!
+---
 
-![Screen shot of web interface](screenshot.png)
+## 系统要求
 
-Audio visualization is provided by [wavesurfer-js](https://wavesurfer-js.org/)
+- **推荐：** Docker（跨平台）
+- **本地运行：** Python 3.11/3.12 + ffmpeg
+- **浏览器：** Chrome/Edge
+
+## 使用说明
+
+1. 启用麦克风
+2. 录制 3 段相同的唤醒词
+3. 输入模型名称，提交
+4. 下载 `.pmdl` 文件
+
+![截图](screenshot.png)
 
 ## HTTP API
 
-You can also `POST` your audio examples to the web server directly and get a `.pmdl` file back!
-
-The `/generate` endpoint expects form data with:
-
-* A `modelName` field with your wake word name
-* At least 3 files with audio samples
-    * These will be converted to the appropriate format with `ffmpeg`
-    * Unless `?noTrim=true` is given, silence is automatically trimmed from the beginning and end of each example
-
-```sh
-$ curl \
-    -X POST \
-    -F modelName=okay-rhasspy \
-    -F example1=@example1.wav \
-    -F example2=@example2.wav \
-    -F example3=@example3.wav \
-    --output okay-rhasspy.pmdl \
-    localhost:8000/generate
+```bash
+curl -X POST \
+    -F modelName=my-wakeword \
+    -F example1=@ex1.wav \
+    -F example2=@ex2.wav \
+    -F example3=@ex3.wav \
+    --output my-wakeword.pmdl \
+    http://localhost:8000/generate
 ```
+
+**参数：**
+- `modelName` - 模型名称（必需）
+- `example1/2/3` - 音频文件（至少 3 个）
+- `lang` - 语言（`en`/`zh`，默认 `en`）
